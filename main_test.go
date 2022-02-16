@@ -108,7 +108,7 @@ func TestCreateProduct(t *testing.T) {
 		t.Errorf("Expected product price to be '11.22'. Got '%v'", m["price"])
 	}
 
-	if m["id"] != 1 {
+	if m["id"] != 1.0 {
 		t.Errorf("Expected product ID to be '1'. Got '%v'", m["id"])
 	}
 }
@@ -179,14 +179,11 @@ func TestDeleteProduct(t *testing.T) {
 
 	req, _ = http.NewRequest("DELETE", "/product/1", nil)
 	response = executeRequest(req)
-
 	checkResponseCode(t, http.StatusOK, response.Code)
 
 	req, _ = http.NewRequest("GET", "product/1", nil)
 	response = executeRequest(req)
-	checkResponseCode(t, http.StatusNotFound, response.Code)
+	checkResponseCode(t, http.StatusMovedPermanently, response.Code)
 }
-
-
 
 
